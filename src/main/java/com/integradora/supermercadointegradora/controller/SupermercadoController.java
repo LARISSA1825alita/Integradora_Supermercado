@@ -25,4 +25,10 @@ public class SupermercadoController {
     public String eliminarProductoDelCarrito(@RequestParam Long clienteId, @RequestParam Long productoId) {
         return supermercadoService.eliminarProductoDelCarrito(clienteId, productoId);
  }
+
+    // Deshacer la última eliminación de un producto del carrito
+    @PostMapping("/deshacerEliminacion")
+    public String deshacerUltimaEliminacion(@RequestParam Long clienteId) {
+        return supermercadoService.deshacerUltimaEliminacion(clienteId);
+    }
 }
