@@ -11,8 +11,14 @@ public class ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    // Agregar un nuevo producto
+    // este metodo va a guardar el producto en la base de datos
     public Producto agregarProducto(Producto producto) {
-        return productoRepository.save(producto);
- }
+        try {
+            // se va guarda  el producto en la base de datos
+            return productoRepository.save(producto);
+        } catch (Exception e) {
+            // las execpciones para los errores
+            throw new RuntimeException("Error al agregar el producto", e);
+        }
+    }
 }

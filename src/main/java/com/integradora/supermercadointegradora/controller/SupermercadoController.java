@@ -7,41 +7,42 @@ import com.integradora.supermercadointegradora.Service.SupermercadoService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/supermercado")
 public class SupermercadoController {
 
     @Autowired
     private SupermercadoService supermercadoService;
 
-    // Agregar un producto al carrito de un cliente
+    // Agregar un producto al carrito
     @PostMapping("/agregarProducto")
     public String agregarProductoAlCarrito(@RequestParam Long clienteId, @RequestParam Long productoId, @RequestParam int cantidad) {
         return supermercadoService.agregarProductoAlCarrito(clienteId, productoId, cantidad);
     }
 
     // Agui agrega uno
-    // Eliminar un producto del carrito de un cliente
+    // se elimina un producto del carrito del cliente
     @DeleteMapping("/eliminarProducto")
     public String eliminarProductoDelCarrito(@RequestParam Long clienteId, @RequestParam Long productoId) {
         return supermercadoService.eliminarProductoDelCarrito(clienteId, productoId);
  }
 
-    // Deshacer la ultima eliminación de un producto
+    // se va a deshacer la ultima eliminación de un producto
     @PostMapping("/deshacerEliminacion")
     public String deshacerUltimaEliminacion(@RequestParam Long clienteId) {
         return supermercadoService.deshacerUltimaEliminacion(clienteId);
     }
-    // Obtener todos los productos
+    // se van a obtener todos los productos
     @GetMapping("/carrito")
     public List<?> obtenerCarrito(@RequestParam Long clienteId) {
         return supermercadoService.obtenerCarrito(clienteId);
  }
-    // Obtener el total de la compra de un cliente
+    // se van a obtener el total de la compra
     @GetMapping("/totalCarrito")
     public double obtenerTotalCarrito(@RequestParam Long clienteId) {
         return supermercadoService.obtenerTotalCarrito(clienteId);
     }
-    // Procesar la compra de un cliente
+    // se va a continuar con la compra del cliente
     @PostMapping("/procesarCompra")
     public String procesarCompra(@RequestParam Long clienteId) {
         return supermercadoService.procesarCompra(clienteId);

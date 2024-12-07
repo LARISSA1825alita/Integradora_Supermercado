@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/carrito")
 public class CarritoController {
 
@@ -36,18 +37,18 @@ public class CarritoController {
     public String eliminarProductoDelCarrito(@RequestParam Long carritoProductoId) {
         boolean eliminado = carritoProductoService.eliminarProductoDelCarrito(carritoProductoId);
         if (eliminado) {
-            return "Producto eliminado del carrito.";
+            return "Se elimino producto del carrito";
         }
-        return "El producto no fue encontrado en el carrito.";
+        return "No se encontro el producto en el carrito";
     }
     // Endpoint para deshacer la ultima eliminación de un producto
     @PostMapping("/deshacerEliminacion")
     public String deshacerUltimaEliminacion() {
         CarritoProducto productoRecuperado = carritoProductoService.deshacerUltimaEliminacion();
         if (productoRecuperado != null) {
-            return "Última eliminación deshecha, producto agregado nuevamente al carrito.";
+            return " Producto agregado nuevamente al carrito";
         }
-        return "No hay eliminaciones para deshacer";
+        return "No hay eliminaciones para ralizar ";
     }
 }
 
