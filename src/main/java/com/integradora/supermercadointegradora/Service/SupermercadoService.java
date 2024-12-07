@@ -81,7 +81,6 @@ public class SupermercadoService {
         return "El producto se agrego al carrito";
     }
 
-    // Alis linda aqui pones el otro
 // se elimina un producto del carrito de un cliente
     public String eliminarProductoDelCarrito(Long clienteId, Long productoId) {
         Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
@@ -106,5 +105,24 @@ public class SupermercadoService {
             return "El producto no se encuentra en el carrito";
   }
  }
+
+    // Deshacer la última eliminación de un producto del carrito
+    public String deshacerUltimaEliminacion(Long clienteId) {
+        if (historialEliminados.isEmpty()) {
+            return "No hay productos para deshacer.";
+        }
+
+        CarritoProducto productoEliminado = historialEliminados.pop();
+        Cliente cliente = productoEliminado.getCliente();
+
+        if (!cliente.getId().equals(clienteId)) {
+            return "El producto eliminado no pertenece a este cliente.";
+        }
+
+        // Volver a agregar el producto al carrito
+        carritoProductoRepository.save(productoEliminado);
+        return "Última eliminación deshecha, producto agregado nuevamente al carrito.";
+    }
+
 }
 
