@@ -52,35 +52,45 @@ public class CarritoProductoService {
 
         return null;
 }
-    // Obtener los productos en el carrito de un cliente
+    // se obtendran los productos en el carrito de un cliente
     public List<CarritoProducto> obtenerProductosEnCarrito(Long clienteId) {
-        // Se llama al repositorio de carritoProducto para obtener todos los productos
-        // asociados al cliente cuyo id es el que se pasa como parámetro.
+        // llama al repositorio de carritoProducto para obtener todos los productos
+        // asociados al cliente cuyo id es el que se pasa como parametro.
         return carritoProductoRepository.findByClienteId(clienteId);
     }
 
     // Eliminar un producto del carrito
     public boolean eliminarProductoDelCarrito(Long carritoProductoId) {
-        // Se busca el producto en el carrito usando su ID.
+        // Se busca el producto en el carrito usando su id
         Optional<CarritoProducto> carritoProductoOpt = carritoProductoRepository.findById(carritoProductoId);
 
-        // Si el producto existe en la base de datos (es encontrado).
+        // Si el producto existe en la base de datos
         if (carritoProductoOpt.isPresent()) {
-            // Se obtiene el objeto CarritoProducto del contenedor Optional.
+            // Se obtiene el objeto CarritoProducto del contenedor Optional
             CarritoProducto carritoProducto = carritoProductoOpt.get();
 
-            // Se elimina el producto del carrito mediante el repositorio.
+            // Se elimina el producto del carrito mediante
             carritoProductoRepository.delete(carritoProducto);
 
-            // Se agrega el producto eliminado a una pila (historialEliminados) para que se pueda recuperar si es necesario.
+            // Se agrega el producto eliminado a una pila para que se pueda recuperar
             historialEliminados.push(carritoProducto); // Agregar a la pila de eliminados
 
-            // Se retorna verdadero, indicando que el producto se eliminó con éxito.
+            // Se retorna verdadero, indicando que el producto se elimino
             return true;
         }
 
-        // Si el producto no fue encontrado, se retorna falso.
+        // Si el producto no se encuentra se retorna falso
         return false;
     }
 
+    // se va a deshacer la utima eliminacion de un producto
+    public CarritoProducto deshacerUltimaEliminacion() {
+        if (!historialEliminados.isEmpty()) {
+            CarritoProducto carritoProducto = historialEliminados.pop();
+            carritoProductoRepository.save(carritoProducto);
+            return carritoProducto;
+        }
+
+        return null;
+}
 }
