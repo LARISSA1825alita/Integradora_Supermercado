@@ -23,5 +23,13 @@ public class CarritoController {
         }
         return "Hubo un problema al agregar el producto.";
     }
+    @GetMapping("/productos")
+    public List<CarritoProducto> obtenerProductosEnCarrito(@RequestParam Long clienteId) {
+        List<CarritoProducto> productos = carritoProductoService.obtenerProductosEnCarrito(clienteId);
+        if (productos != null && !productos.isEmpty()) {
+            return productos;
+        }
+        return null;
+}
 
 }
