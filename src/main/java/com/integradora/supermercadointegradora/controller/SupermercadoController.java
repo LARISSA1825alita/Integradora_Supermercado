@@ -41,4 +41,9 @@ public class SupermercadoController {
     public double obtenerTotalCarrito(@RequestParam Long clienteId) {
         return supermercadoService.obtenerTotalCarrito(clienteId);
     }
+    // Procesar la compra de un cliente
+    @PostMapping("/procesarCompra")
+    public String procesarCompra(@RequestParam Long clienteId) {
+        return supermercadoService.procesarCompra(clienteId);
+ }
 }
