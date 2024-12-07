@@ -36,4 +36,9 @@ public class SupermercadoController {
     public List<?> obtenerCarrito(@RequestParam Long clienteId) {
         return supermercadoService.obtenerCarrito(clienteId);
  }
+    // Obtener el total de la compra de un cliente
+    @GetMapping("/totalCarrito")
+    public double obtenerTotalCarrito(@RequestParam Long clienteId) {
+        return supermercadoService.obtenerTotalCarrito(clienteId);
+    }
 }
