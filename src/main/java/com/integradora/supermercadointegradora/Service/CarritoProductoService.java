@@ -28,8 +28,6 @@ public class CarritoProductoService {
 
     private Stack<CarritoProducto> historialEliminados = new Stack<>();
 
-
-    //Falta agregar cosas
     //metodo que agregara un producto al carrito
     public CarritoProducto agregarProductoAlCarrito(Long clienteId, Long productoId, int cantidad) {
         // se va a buscar al cliente con su id
@@ -54,4 +52,35 @@ public class CarritoProductoService {
 
         return null;
 }
+    // Obtener los productos en el carrito de un cliente
+    public List<CarritoProducto> obtenerProductosEnCarrito(Long clienteId) {
+        // Se llama al repositorio de carritoProducto para obtener todos los productos
+        // asociados al cliente cuyo id es el que se pasa como parámetro.
+        return carritoProductoRepository.findByClienteId(clienteId);
+    }
+
+    // Eliminar un producto del carrito
+    public boolean eliminarProductoDelCarrito(Long carritoProductoId) {
+        // Se busca el producto en el carrito usando su ID.
+        Optional<CarritoProducto> carritoProductoOpt = carritoProductoRepository.findById(carritoProductoId);
+
+        // Si el producto existe en la base de datos (es encontrado).
+        if (carritoProductoOpt.isPresent()) {
+            // Se obtiene el objeto CarritoProducto del contenedor Optional.
+            CarritoProducto carritoProducto = carritoProductoOpt.get();
+
+            // Se elimina el producto del carrito mediante el repositorio.
+            carritoProductoRepository.delete(carritoProducto);
+
+            // Se agrega el producto eliminado a una pila (historialEliminados) para que se pueda recuperar si es necesario.
+            historialEliminados.push(carritoProducto); // Agregar a la pila de eliminados
+
+            // Se retorna verdadero, indicando que el producto se eliminó con éxito.
+            return true;
+        }
+
+        // Si el producto no fue encontrado, se retorna falso.
+        return false;
+    }
+
 }
