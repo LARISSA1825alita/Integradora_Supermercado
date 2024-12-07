@@ -20,4 +20,9 @@ public class SupermercadoController {
     }
 
     // Agui agrega uno
+    // Eliminar un producto del carrito de un cliente
+    @DeleteMapping("/eliminarProducto")
+    public String eliminarProductoDelCarrito(@RequestParam Long clienteId, @RequestParam Long productoId) {
+        return supermercadoService.eliminarProductoDelCarrito(clienteId, productoId);
+ }
 }
