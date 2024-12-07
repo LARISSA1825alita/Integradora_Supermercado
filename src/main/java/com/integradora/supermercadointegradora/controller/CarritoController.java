@@ -40,4 +40,14 @@ public class CarritoController {
         }
         return "El producto no fue encontrado en el carrito.";
     }
+    // Endpoint para deshacer la ultima eliminación de un producto
+    @PostMapping("/deshacerEliminacion")
+    public String deshacerUltimaEliminacion() {
+        CarritoProducto productoRecuperado = carritoProductoService.deshacerUltimaEliminacion();
+        if (productoRecuperado != null) {
+            return "Última eliminación deshecha, producto agregado nuevamente al carrito.";
+        }
+        return "No hay eliminaciones para deshacer.";
+ }
 }
+
