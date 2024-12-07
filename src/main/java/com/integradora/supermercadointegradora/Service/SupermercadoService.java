@@ -1,6 +1,7 @@
 package com.integradora.supermercadointegradora.Service;
 
 import com.integradora.supermercadointegradora.Entity.CarritoProducto;
+import com.integradora.supermercadointegradora.Entity.Cliente;
 import com.integradora.supermercadointegradora.Entity.Producto;
 import com.integradora.supermercadointegradora.repository.CarritoProductoRepository;
 import com.integradora.supermercadointegradora.repository.ClienteRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Stack;
 
 @Service
@@ -25,8 +27,6 @@ public class SupermercadoService {
 
     // Stack para registrar los productos eliminados del carrito
     private Stack<CarritoProducto> historialEliminados = new Stack<>();
-
-    // Aqui agregas lo que sigue ali
 
     // se vaa procesar la compra de un cliente
     public String procesarCompra(Long clienteId) {
@@ -48,4 +48,38 @@ public class SupermercadoService {
 
         return "Compra finalizada. Total: "+total;
      }
+
+    public String agregarProductoAlCarrito(Long clienteId, Long productoId, int cantidad) {
+        // Verificar si el cliente y el producto existen
+        Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
+        Producto producto = productoRepository.findById(productoId).orElse(null);
+
+        if (cliente == null) {
+            return "Cliente no encontrado.";
+        }
+
+        if (producto == null) {
+            return "Producto no encontrado.";
+        }
+
+        // Verificar si el producto ya está en el carrito
+        Optional<CarritoProducto> carritoProductoOpt = carritoProductoRepository.findByClienteAndProducto(cliente, producto);
+        if (carritoProductoOpt.isPresent()) {
+            CarritoProducto carritoProducto = carritoProductoOpt.get();
+            // Si el producto ya está en el carrito, actualizar la cantidad
+            carritoProducto.setCantidad(carritoProducto.getCantidad() + cantidad);
+            carritoProductoRepository.save(carritoProducto);
+        } else {
+            // Si el producto no está en el carrito, agregarlo
+            CarritoProducto carritoProducto = new CarritoProducto();
+            carritoProducto.setCliente(cliente);
+            carritoProducto.setProducto(producto);
+            carritoProducto.setCantidad(cantidad);
+            carritoProductoRepository.save(carritoProducto);
+        }
+
+        return "Producto agregado al carrito.";
     }
+
+    // Alis linda aqui pones el otro
+}
