@@ -106,23 +106,30 @@ public class SupermercadoService {
   }
  }
 
-    // Deshacer la última eliminación de un producto del carrito
+    // Deshacer la ultima eliminacion de un producto del carrito
     public String deshacerUltimaEliminacion(Long clienteId) {
         if (historialEliminados.isEmpty()) {
-            return "No hay productos para deshacer.";
+            return "No hay productos para eliminar";
         }
 
         CarritoProducto productoEliminado = historialEliminados.pop();
         Cliente cliente = productoEliminado.getCliente();
 
         if (!cliente.getId().equals(clienteId)) {
-            return "El producto eliminado no pertenece a este cliente.";
+            return "El producto eliminado nno coincide con el cliente";
         }
 
         // Volver a agregar el producto al carrito
         carritoProductoRepository.save(productoEliminado);
-        return "Última eliminación deshecha, producto agregado nuevamente al carrito.";
+        return "ltima eliminación deshecha, producto agregado nuevamente al carrito.";
     }
-
+    // Obtener todos los productos en el carrito de un cliente
+    public List<CarritoProducto> obtenerCarrito(Long clienteId) {
+        Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
+        if (cliente == null) {
+            return null;
+        }
+        return carritoProductoRepository.findByClienteId(clienteId);
+ }
 }
 
