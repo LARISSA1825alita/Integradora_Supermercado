@@ -46,8 +46,8 @@ public class SupermercadoService {
         // vaciar el carrito del cliente despues de la compra
         carritoProductoRepository.deleteAll(productosEnCarrito);
 
-        return "Compra finalizada. Total: "+total;
-     }
+        return "Compra finalizada. Total: " + total;
+    }
 
     public String agregarProductoAlCarrito(Long clienteId, Long productoId, int cantidad) {
         // Verificar si el cliente y el producto existen
@@ -55,11 +55,11 @@ public class SupermercadoService {
         Producto producto = productoRepository.findById(productoId).orElse(null);
 
         if (cliente == null) {
-            return "Cliente no encontrado.";
+            return "Cliente no encontrado";
         }
 
         if (producto == null) {
-            return "Producto no encontrado.";
+            return "Producto no encontrado";
         }
 
         // Verificar si el producto ya está en el carrito
@@ -78,8 +78,33 @@ public class SupermercadoService {
             carritoProductoRepository.save(carritoProducto);
         }
 
-        return "Producto agregado al carrito.";
+        return "El producto se agrego al carrito";
     }
 
     // Alis linda aqui pones el otro
+// se elimina un producto del carrito de un cliente
+    public String eliminarProductoDelCarrito(Long clienteId, Long productoId) {
+        Cliente cliente = clienteRepository.findById(clienteId).orElse(null);
+        Producto producto = productoRepository.findById(productoId).orElse(null);
+
+        if (cliente == null) {
+            return "No se encontro al cliente";
+        }
+
+        if (producto == null) {
+            return "No se encontro el producto";
+        }
+
+        Optional<CarritoProducto> carritoProductoOpt = carritoProductoRepository.findByClienteAndProducto(cliente, producto);
+        if (carritoProductoOpt.isPresent()) {
+            CarritoProducto carritoProducto = carritoProductoOpt.get();
+            // Registrar el producto eliminado en el historial
+            historialEliminados.push(carritoProducto);
+            carritoProductoRepository.delete(carritoProducto);
+            return "Se elimino el producto del carrirto";
+        } else {
+            return "El producto no se encuentra en el carrito";
+  }
+ }
 }
+
