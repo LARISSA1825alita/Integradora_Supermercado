@@ -131,5 +131,17 @@ public class SupermercadoService {
         }
         return carritoProductoRepository.findByClienteId(clienteId);
  }
+
+    // Obtener el total de la compra de un cliente
+    public double obtenerTotalCarrito(Long clienteId) {
+        List<CarritoProducto> productosEnCarrito = carritoProductoRepository.findByClienteId(clienteId);
+        double total = 0;
+        for (CarritoProducto carritoProducto : productosEnCarrito) {
+            Producto producto = carritoProducto.getProducto();
+            total += producto.getPrecio() * carritoProducto.getCantidad();
+        }
+        return total;
+    }
+
 }
 
