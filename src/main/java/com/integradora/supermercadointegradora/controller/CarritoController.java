@@ -47,7 +47,7 @@ public class CarritoController {
         if (productoRecuperado != null) {
             return "Última eliminación deshecha, producto agregado nuevamente al carrito.";
         }
-        return "No hay eliminaciones para deshacer.";
- }
+        return "No hay eliminaciones para deshacer";
+    }
 }
 
