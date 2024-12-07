@@ -31,5 +31,13 @@ public class CarritoController {
         }
         return null;
 }
-
+    // Endpoint para eliminar un producto del carrito
+    @DeleteMapping("/eliminar")
+    public String eliminarProductoDelCarrito(@RequestParam Long carritoProductoId) {
+        boolean eliminado = carritoProductoService.eliminarProductoDelCarrito(carritoProductoId);
+        if (eliminado) {
+            return "Producto eliminado del carrito.";
+        }
+        return "El producto no fue encontrado en el carrito.";
+    }
 }
