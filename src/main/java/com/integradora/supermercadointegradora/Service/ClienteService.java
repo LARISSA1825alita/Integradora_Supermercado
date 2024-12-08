@@ -6,11 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ClienteService {
-
     @Autowired
     private ClienteRepository clienteRepository;
 
-    // Agregar un nuevo cliente
     public Cliente agregarCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
     }

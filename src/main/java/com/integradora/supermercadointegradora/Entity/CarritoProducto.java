@@ -1,74 +1,65 @@
 package com.integradora.supermercadointegradora.Entity;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.JoinColumn;
-
+//notacion para clase Jsa , tiene relacion con la tabla de la bd
 @Entity
 public class CarritoProducto {
 
+    //se va a definir una clave primaria para la entidad
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática del ID
+    // se generara  el valor de la clave primaria
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // Relación ManyToOne con Producto
-    @JoinColumn(name = "producto_id") // Especifica el nombre de la columna que se usará para la relación en la base de datos
-    private Producto producto;
-
-    @ManyToOne // Relación ManyToOne con Cliente
+    // existe una relacion muchos a uno con la entidad Cliente, cada CarritoProducto esta asociado a un cliente
+    @ManyToOne
     private Cliente cliente;
 
+    // existe una relacon muchos a uno con la entidad Producto, cada CarritoProducto esta asociado a un producto
+    @ManyToOne
+    private Producto producto;
+
+    // este atributo indica  la cantidad de un producto en el carrito
     private int cantidad;
 
-    // Constructor vacío (necesario para JPA)
-    public CarritoProducto() {
-    }
-
-    // Constructor con parámetros
-    public CarritoProducto(Producto producto, Cliente cliente, int cantidad) {
-        this.producto = producto;
-        this.cliente = cliente;
-        this.cantidad = cantidad;
-    }
-
-    // Getters y setters
+    // Getters and Setters
+    // metodo para obtener el id del carrito de producto
     public Long getId() {
         return id;
     }
 
+    // metodo para establecer el id del carrito de producto
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Producto getProducto() {
-        return producto;
-    }
-
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
-
+    // metodo para obtener el cliente asociado al carrito de producto
     public Cliente getCliente() {
         return cliente;
     }
 
+    // metodo para establecer el cliente asociado al carrito de producto
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
+    // metodo para obtener el producto asociado al carrito de producto
+    public Producto getProducto() {
+        return producto;
+    }
+
+    // metodo para establecer el producto asociado al carrito de producto
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    // metodo para obtener la cantidad del producto en el carrito
     public int getCantidad() {
         return cantidad;
     }
 
+    // metodo para establecer la cantidad del producto en el carrito
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
-    }
-
-    @Override
-    public String toString() {
-        return "CarritoProducto{id=" + id + ", producto=" + producto + ", cliente=" + cliente + ", cantidad=" + cantidad + '}';
     }
 }

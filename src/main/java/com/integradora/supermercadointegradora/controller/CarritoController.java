@@ -1,54 +1,54 @@
 package com.integradora.supermercadointegradora.controller;
-
-import com.integradora.supermercadointegradora.Service.CarritoProductoService;
 import com.integradora.supermercadointegradora.Entity.CarritoProducto;
+import com.integradora.supermercadointegradora.Service.CarritoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/carrito")
 public class CarritoController {
 
     @Autowired
-    private CarritoProductoService carritoProductoService;
-
-    // Endpoint para agregar un producto al carrito
+    private CarritoService carritoService;
+   //metodo para agreagar productos al carrito
     @PostMapping("/agregar")
-    public String agregarProductoAlCarrito(@RequestParam Long clienteId, @RequestParam Long productoId, @RequestParam int cantidad) {
-        CarritoProducto carritoProducto = carritoProductoService.agregarProductoAlCarrito(clienteId, productoId, cantidad);
-        if (carritoProducto != null) {
-            return "Producto agregado al carrito.";
-        }
-        return "Hubo un problema al agregar el producto.";
+    // recibira un objeto CarritoProducto en el body de la solicitud
+    public ResponseEntity<CarritoProducto> agregarProducto(@RequestBody CarritoProducto carritoProducto) {
+        // se va a llamar al servicio para agregar el producto al carrito
+        CarritoProducto productoAgregado = carritoService.agregarProducto(carritoProducto);
+        // va a retornar la respuesta con el producto agregado
+        return ResponseEntity.ok(productoAgregado);
     }
-    @GetMapping("/productos")
-    public List<CarritoProducto> obtenerProductosEnCarrito(@RequestParam Long clienteId) {
-        List<CarritoProducto> productos = carritoProductoService.obtenerProductosEnCarrito(clienteId);
-        if (productos != null && !productos.isEmpty()) {
-            return productos;
-        }
-        return null;
-}
-    // Endpoint para eliminar un producto del carrito
-    @DeleteMapping("/eliminar")
-    public String eliminarProductoDelCarrito(@RequestParam Long carritoProductoId) {
-        boolean eliminado = carritoProductoService.eliminarProductoDelCarrito(carritoProductoId);
-        if (eliminado) {
-            return "Se elimino producto del carrito";
-        }
-        return "No se encontro el producto en el carrito";
+    // metodo para obtener el carrito de un cliente especifico
+    @GetMapping("/{clienteId}")
+    // va a recibir el id del cliente como variable de ruta
+    public ResponseEntity<List<CarritoProducto>> obtenerCarrito(@PathVariable Long clienteId) {
+        // va a llamar al servicio para obtener los productos del carrito
+        List<CarritoProducto> carrito = carritoService.obtenerCarrito(clienteId);
+        // va a retornar la lista de productos en el carrito
+        return ResponseEntity.ok(carrito);
     }
-    // Endpoint para deshacer la ultima eliminación de un producto
-    @PostMapping("/deshacerEliminacion")
-    public String deshacerUltimaEliminacion() {
-        CarritoProducto productoRecuperado = carritoProductoService.deshacerUltimaEliminacion();
-        if (productoRecuperado != null) {
-            return " Producto agregado nuevamente al carrito";
-        }
-        return "No hay eliminaciones para ralizar ";
+    // metodo para eliminar un producto del carrito
+    @PostMapping("/eliminar")
+    // va a recibir un objeto CarritoProducto en el body
+    public ResponseEntity<Void> eliminarProducto(@RequestBody CarritoProducto carritoProducto) {
+        // se va a llamer al servicio para eliminar el producto del carrito
+        carritoService.eliminarProducto(carritoProducto);
+        // va a retorna una respuesta
+        return ResponseEntity.noContent().build();
+    }
+
+
+    // metodo para deshacer la eliminacion de un producto del carrito
+    @PostMapping("/deshacer")
+    // va a recibir  un objeto CarritoProducto en el cuerpo
+    public ResponseEntity<Void> deshacerEliminacion(@RequestBody CarritoProducto carritoProducto) {
+        // va a llamr al servicio para deshacer la eliminacion del producto
+        carritoService.deshacerEliminacion(carritoProducto);
+        // va a retorna una respuesta
+        return ResponseEntity.noContent().build();
     }
 }
 
