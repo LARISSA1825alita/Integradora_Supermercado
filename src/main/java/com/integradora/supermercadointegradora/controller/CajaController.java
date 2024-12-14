@@ -1,31 +1,30 @@
 package com.integradora.supermercadointegradora.controller;
 
+import com.integradora.supermercadointegradora.Entity.Cliente;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
+
 
 @RestController
 @RequestMapping("/caja")
 public class CajaController {
-
-    private Queue<Long> filaClientes = new LinkedList<>();
+    private final Stack<Cliente> fila = new Stack<>();
 
     @PostMapping("/agregar")
-    public ResponseEntity<Void> agregarClienteAFila(@RequestParam Long clienteId) {
-        filaClientes.offer(clienteId);
-        return ResponseEntity.ok().build();
+    public String agregarClienteAFila(@RequestBody Cliente cliente) {
+        fila.push(cliente);
+        return "Cliente agregado a la fila";
     }
 
     @GetMapping("/atender")
-    public ResponseEntity<Long> atenderCliente() {
-        Long clienteId = filaClientes.poll();
-        return clienteId != null ? ResponseEntity.ok(clienteId) : ResponseEntity.noContent().build();
+    public Cliente atenderCliente() {
+        return fila.isEmpty() ? null : fila.pop();
     }
 
     @GetMapping("/obtenerFila")
-    public ResponseEntity<Queue<Long>> obtenerFila() {
-        return ResponseEntity.ok(filaClientes);
+    public List<Cliente> obtenerFila() {
+        return new ArrayList<>(fila);
     }
 }
