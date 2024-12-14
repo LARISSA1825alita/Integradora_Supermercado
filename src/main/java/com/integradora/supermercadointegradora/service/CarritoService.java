@@ -30,7 +30,7 @@ public class CarritoService {
 
     public void eliminarProducto(Long id) {
         CarritoProducto eliminado = carritoProductoRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("Producto no encontrado con ID: " + id));
+                .orElseThrow(() -> new NoSuchElementException("No se encontro el producto con el ID: " + id));
         carritoProductoRepository.delete(eliminado);
         historialEliminados.push(eliminado);
     }

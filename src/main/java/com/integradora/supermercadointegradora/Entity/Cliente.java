@@ -18,7 +18,7 @@ public class Cliente {
 
     private List<CarritoProducto> carritoProductos = new ArrayList<>();
 
-    // Getters y setters
+    // los getters y setters
     public Long getId() {
         return id;
     }

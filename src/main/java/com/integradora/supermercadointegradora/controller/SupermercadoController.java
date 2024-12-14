@@ -24,7 +24,7 @@ public class SupermercadoController {
     @Autowired
     private CarritoProductoRepository carritoProductoRepository;
 
-    // Procesar compra de un cliente
+    // Aqui se va a procesar la compra de un cliente
     @PostMapping("/comprar/{clienteId}")
     public String procesarCompra(@PathVariable Long clienteId) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
@@ -33,7 +33,7 @@ public class SupermercadoController {
             if (carrito.isEmpty()) {
                 return "El carrito está vacío, no se puede procesar la compra.";
             } else {
-                // Simular el procesamiento de la compra
+                //  procesamiento de la compra
                 carritoProductoRepository.deleteAll(carrito);
                 return "Compra procesada para el cliente con ID: " + clienteId;
             }
@@ -41,13 +41,13 @@ public class SupermercadoController {
         return "Cliente no encontrado.";
     }
 
-    // Obtener todos los productos disponibles para la venta
+    // se obtienen  todos los productos disponibles para vender
     @GetMapping("/productos")
     public List<Producto> obtenerProductosDisponibles() {
         return productoRepository.findAll();
     }
 
-    // Agregar producto al carrito de un cliente
+    // se agregara un  producto al carrito de un cliente
     @PostMapping("/agregarProductoCarrito/{clienteId}")
     public String agregarProductoCarrito(@PathVariable Long clienteId, @RequestBody CarritoProducto carritoProducto) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
@@ -57,9 +57,9 @@ public class SupermercadoController {
             carritoProducto.setCliente(cliente.get());
             carritoProducto.setProducto(producto.get());
             carritoProductoRepository.save(carritoProducto);
-            return "Producto agregado al carrito.";
+            return "El producto se agrego al carrito";
         }
-        return "Cliente o producto no encontrado.";
+        return "No se encontro el producto o al cliente";
     }
 
     // Ver el carrito de un cliente
@@ -69,10 +69,10 @@ public class SupermercadoController {
         if (cliente.isPresent()) {
             return carritoProductoRepository.findByCliente(cliente.get());
         }
-        return null; // O retornar un error adecuado
+        return null;
     }
 
-    // Eliminar producto del carrito de un cliente
+    // se elimina el  producto del carrito de un cliente
     @DeleteMapping("/eliminarProductoCarrito/{clienteId}/{productoId}")
     public String eliminarProductoCarrito(@PathVariable Long clienteId, @PathVariable Long productoId) {
         Optional<Cliente> cliente = clienteRepository.findById(clienteId);
@@ -82,10 +82,10 @@ public class SupermercadoController {
             CarritoProducto carritoProducto = carritoProductoRepository.findByClienteAndProducto(cliente.get(), producto.get());
             if (carritoProducto != null) {
                 carritoProductoRepository.delete(carritoProducto);
-                return "Producto eliminado del carrito.";
+                return "Se elimino el producto  del carrito";
             }
-            return "Producto no encontrado en el carrito.";
+            return "El producto no se  encontrado en el carrito";
         }
-        return "Cliente o producto no encontrado.";
+        return "No se encontro el producto o al cliente";
     }
 }

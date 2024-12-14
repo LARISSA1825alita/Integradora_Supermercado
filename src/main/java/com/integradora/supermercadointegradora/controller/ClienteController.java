@@ -14,32 +14,32 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    // Crear un nuevo cliente
+    // Se va a crear un nuevo cliente
     @PostMapping("/crear")
     public Cliente crearCliente(@RequestBody Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 
-    // Obtener todos los clientes
+    // Se van a obtener todos los clientes
     @GetMapping("/todos")
     public List<Cliente> obtenerClientes() {
         return clienteRepository.findAll();
     }
 
-    // Obtener un cliente por su ID
+    // Se va obtener un cliente por su id
     @GetMapping("/{id}")
     public Optional<Cliente> obtenerCliente(@PathVariable Long id) {
         return clienteRepository.findById(id);
     }
 
-    // Actualizar un cliente
+    // Se va a actualizar un cliente
     @PutMapping("/actualizar/{id}")
     public Cliente actualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) {
         cliente.setId(id);
         return clienteRepository.save(cliente);
     }
 
-    // Eliminar un cliente
+    // Se vaa eliminar un cliente
     @DeleteMapping("/eliminar/{id}")
     public void eliminarCliente(@PathVariable Long id) {
         clienteRepository.deleteById(id);

@@ -13,7 +13,7 @@ public class Producto {
     private String nombre;
     private Double precio;
 
-    // Getters y setters
+    // los getters y setters
     public Long getId() {
         return id;
     }

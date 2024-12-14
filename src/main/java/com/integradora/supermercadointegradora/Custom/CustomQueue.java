@@ -16,14 +16,14 @@ public class CustomQueue<T> {
 
     public T dequeue() {
         if (queue.isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
+            throw new IllegalStateException("Cola vacia");
         }
         return queue.poll();
     }
 
     public T peek() {
         if (queue.isEmpty()) {
-            throw new IllegalStateException("Queue is empty");
+            throw new IllegalStateException("Cola vacia");
         }
         return queue.peek();
     }
@@ -36,7 +36,7 @@ public class CustomQueue<T> {
         return queue.size();
     }
 
-    // Getters and Setters
+    // los getters y Setters
     public Queue<T> getQueue() {
         return queue;
     }

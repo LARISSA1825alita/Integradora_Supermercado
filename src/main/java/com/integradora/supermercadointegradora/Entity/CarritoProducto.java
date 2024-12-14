@@ -13,8 +13,7 @@ public class CarritoProducto {
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     @JsonBackReference
-    @JsonIgnore // Evita la serialización del atributo 'cliente'
-// Evita la serialización de la parte inversa para evitar la recursión infinita
+    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne
@@ -23,7 +22,7 @@ public class CarritoProducto {
 
     private Integer cantidad;
 
-    // Getters y setters
+    // los getters y setters
     public Long getId() {
         return id;
     }
