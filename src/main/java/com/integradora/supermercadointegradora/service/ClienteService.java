@@ -12,7 +12,7 @@ public class ClienteService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Cliente agregarCliente(Cliente cliente) {
+    public Cliente crearCliente(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
 }

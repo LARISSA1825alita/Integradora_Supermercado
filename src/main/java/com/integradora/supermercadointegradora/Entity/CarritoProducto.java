@@ -1,7 +1,5 @@
 package com.integradora.supermercadointegradora.Entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,18 +9,14 @@ public class CarritoProducto {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "cliente_id")
-    @JsonBackReference
-    @JsonIgnore
     private Cliente cliente;
 
     @ManyToOne
-    @JoinColumn(name = "producto_id")
     private Producto producto;
 
     private Integer cantidad;
 
-    // los getters y setters
+    // Getters y Setters
     public Long getId() {
         return id;
     }
@@ -55,5 +49,3 @@ public class CarritoProducto {
         this.cantidad = cantidad;
     }
 }
-
-

@@ -1,19 +1,17 @@
 package com.integradora.supermercadointegradora.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String nombre;
     private Double precio;
 
-    // los getters y setters
+    // Getters y Setters
     public Long getId() {
         return id;
     }
