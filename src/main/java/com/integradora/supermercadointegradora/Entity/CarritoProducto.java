@@ -1,5 +1,7 @@
 package com.integradora.supermercadointegradora.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,12 +11,17 @@ public class CarritoProducto {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    @JsonBackReference
+    @JsonIgnore // Evita la serialización del atributo 'cliente'
+// Evita la serialización de la parte inversa para evitar la recursión infinita
     private Cliente cliente;
 
     @ManyToOne
+    @JoinColumn(name = "producto_id")
     private Producto producto;
 
-    private int cantidad;
+    private Integer cantidad;
 
     // Getters y setters
     public Long getId() {
@@ -41,12 +48,13 @@ public class CarritoProducto {
         this.producto = producto;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 }
+
 

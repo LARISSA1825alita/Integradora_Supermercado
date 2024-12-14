@@ -1,30 +1,30 @@
 package com.integradora.supermercadointegradora.controller;
 
 import com.integradora.supermercadointegradora.Entity.Cliente;
-import org.springframework.http.ResponseEntity;
+import com.integradora.supermercadointegradora.Custom.CustomQueue;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
-
+import java.util.Queue;
 
 @RestController
 @RequestMapping("/caja")
 public class CajaController {
-    private final Stack<Cliente> fila = new Stack<>();
+
+    private CustomQueue<Cliente> filaClientes = new CustomQueue<>();
 
     @PostMapping("/agregar")
-    public String agregarClienteAFila(@RequestBody Cliente cliente) {
-        fila.push(cliente);
+    public String agregarCliente(@RequestBody Cliente cliente) {
+        filaClientes.enqueue(cliente);
         return "Cliente agregado a la fila";
     }
 
     @GetMapping("/atender")
     public Cliente atenderCliente() {
-        return fila.isEmpty() ? null : fila.pop();
+        return filaClientes.dequeue();
     }
 
     @GetMapping("/obtenerFila")
-    public List<Cliente> obtenerFila() {
-        return new ArrayList<>(fila);
+    public Queue<Cliente> obtenerFila() {
+        return filaClientes.getQueue();
     }
 }

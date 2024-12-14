@@ -1,5 +1,8 @@
 package com.integradora.supermercadointegradora.Entity;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,13 +11,13 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private List<CarritoProducto> carrito = new ArrayList<>();
+    @JsonManagedReference
 
-    // Getters y setters
+    private List<CarritoProducto> carritoProductos = new ArrayList<>();
+
     // Getters y setters
     public Long getId() {
         return id;
@@ -32,11 +35,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public List<CarritoProducto> getCarrito() {
-        return carrito;
+    public List<CarritoProducto> getCarritoProductos() {
+        return carritoProductos;
     }
 
-    public void setCarrito(List<CarritoProducto> carrito) {
-        this.carrito = carrito;
+    public void setCarritoProductos(List<CarritoProducto> carritoProductos) {
+        this.carritoProductos = carritoProductos;
     }
 }

@@ -1,49 +1,41 @@
 package com.integradora.supermercadointegradora.controller;
-import com.integradora.supermercadointegradora.Entity.CarritoProducto;
-import com.integradora.supermercadointegradora.repository.CarritoProductoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
+import com.integradora.supermercadointegradora.Entity.CarritoProducto;
+import com.integradora.supermercadointegradora.Custom.CustomStack;
+
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
-import java.util.Stack;
 
 @RestController
 @RequestMapping("/carrito")
 public class CarritoController {
-    @Autowired
-    private CarritoProductoRepository carritoProductoRepository;
 
-    private Stack<CarritoProducto> historialEliminados = new Stack<>();
+    private CustomStack<CarritoProducto> carritoStack = new CustomStack<>();
 
     @PostMapping("/agregar")
-    public CarritoProducto agregarProductoAlCarrito(@RequestBody CarritoProducto carritoProducto) {
-        return carritoProductoRepository.save(carritoProducto);
+    public String agregarProducto(@RequestBody CarritoProducto carritoProducto) {
+        carritoStack.push(carritoProducto);
+        return "Producto agregado al carrito";
     }
 
     @GetMapping("/{clienteId}")
-    public List<CarritoProducto> listarProductos(@PathVariable Long clienteId) {
-        return carritoProductoRepository.findAll();
+    public List<CarritoProducto> obtenerCarrito(@PathVariable Long clienteId) {
+        // Este ejemplo devuelve el stack completo de productos para el cliente
+        return (List<CarritoProducto>) carritoStack.getStack();
     }
 
     @PostMapping("/eliminar")
-    public String eliminarProducto(@RequestBody Long carritoProductoId) {
-        CarritoProducto carritoProducto = carritoProductoRepository.findById(carritoProductoId).orElse(null);
-        if (carritoProducto != null) {
-            historialEliminados.push(carritoProducto);
-            carritoProductoRepository.delete(carritoProducto);
-            return "Producto eliminado";
-        }
-        return "Producto no encontrado";
+    public String eliminarProducto(@RequestBody CarritoProducto carritoProducto) {
+        carritoStack.pop();
+        return "Producto eliminado del carrito";
     }
 
     @PostMapping("/deshacer")
     public String deshacerEliminacion() {
-        if (!historialEliminados.isEmpty()) {
-            CarritoProducto carritoProducto = historialEliminados.pop();
-            carritoProductoRepository.save(carritoProducto);
-            return "Eliminación deshecha";
-        }
-        return "No hay eliminaciones para deshacer";
+        // Implementar recuperación del último producto eliminado si es necesario
+        return "Deshacer última eliminación";
     }
 }
 
