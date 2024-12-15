@@ -9,3 +9,5 @@ public class SupermercadoIntegradoraApplication {
         SpringApplication.run(SupermercadoIntegradoraApplication.class, args);
     }
 }
+
+

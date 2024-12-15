@@ -1,44 +1,35 @@
 package com.integradora.supermercadointegradora.controller;
 
-
-import com.integradora.supermercadointegradora.Custom.CustomQueue;
-import com.integradora.supermercadointegradora.Entity.Cliente;
-import com.integradora.supermercadointegradora.repository.CarritoProductoRepository;
-import com.integradora.supermercadointegradora.repository.ClienteRepository;
+import com.integradora.supermercadointegradora.entity.Cliente;
+import com.integradora.supermercadointegradora.response.ClienteResponseRest;
+import com.integradora.supermercadointegradora.service.IClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 @RestController
-@RequestMapping("/caja")
-
+@RequestMapping("/v1")
 public class CajaController {
-
     @Autowired
-    private ClienteRepository clienteRepository;
-    @Autowired
-    private CarritoProductoRepository carritoProductoRepository;
+    private IClienteService service;
 
-    private CustomQueue<Cliente> filaClientes = new CustomQueue<>();
 
-    @PostMapping("/agregar")
-    public ResponseEntity<String> agregarAFila(@RequestBody Cliente cliente) {
-        //va a agregar un cliente a la cola
-        filaClientes.enqueue(cliente);
-        return ResponseEntity.ok("El cliente se agrego a la fila para la caja");
+    @PostMapping("/caja/agregar/{id}")
+    public ResponseEntity<ClienteResponseRest> agregarCaja(@PathVariable Long id){
+        ResponseEntity<ClienteResponseRest> response = service.agregarCaja(id);
+        return response;
+    }
+    @GetMapping("/caja/atender")
+    public ResponseEntity<ClienteResponseRest> atenderCaja(){
+        ResponseEntity<ClienteResponseRest> response = service.atenderCaja();
+        return response;
+    }
+    @GetMapping("/caja/obtenerFila")
+    public ResponseEntity<ClienteResponseRest> consultarCaja(){
+        ResponseEntity<ClienteResponseRest> response = service.consultarCaja();
+        return response;
     }
 
-    //este metodo va a atender a la siguiente cliente
-    @GetMapping("/atender")
-    public ResponseEntity<String> atenderCliente() {
-        //y se va a obtener al cliente que sigue
-        Cliente clienteAtendido = filaClientes.dequeue();
-        //si no hay ningun cliente en la fila se va a mandar un error
-        if (clienteAtendido == null) {
-            return ResponseEntity.badRequest().body("La fila n tiene ningun cliente");
-        }
-        //va a retornar el cliente que se esta atendiendo
-        return ResponseEntity.ok("Cliente atendido " + clienteAtendido.getNombre());
-    }
+
+
 }

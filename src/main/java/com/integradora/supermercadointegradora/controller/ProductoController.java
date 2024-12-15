@@ -1,32 +1,28 @@
 package com.integradora.supermercadointegradora.controller;
 
-
-import com.integradora.supermercadointegradora.Entity.Producto;
-import com.integradora.supermercadointegradora.repository.ProductoRepository;
+import com.integradora.supermercadointegradora.entity.Producto;
+import com.integradora.supermercadointegradora.response.ClienteResponseRest;
+import com.integradora.supermercadointegradora.response.ProductoResponseRest;
+import com.integradora.supermercadointegradora.service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/producto")
+@RequestMapping("/v1")
 public class ProductoController {
 
     @Autowired
-    private ProductoRepository productoRepository;
-
-    //este metodo es paraa agregar un producto nuevo
-    @PostMapping("/agregarProducto")
-    public ResponseEntity<Producto> agregarProducto(@RequestBody Producto producto) {
-    // se va a gardar  el producto recibido por  el cuerpo
-        return ResponseEntity.ok(productoRepository.save(producto));
+    private IProductoService service;
+    @PostMapping("/producto/agregarProducto")
+    public ResponseEntity<ProductoResponseRest> crear(@RequestBody Producto request){
+        ResponseEntity<ProductoResponseRest>  response = service.crear(request);
+        return response;
+    }
+    @GetMapping("/producto/listado")
+    public ResponseEntity<ProductoResponseRest> listado(){
+        ResponseEntity<ProductoResponseRest> response = service.buscarproducto();
+        return response;
     }
 
-    //metodo para poder listar todos los productos
-    @GetMapping("/listarProductos")
-    public ResponseEntity<List<Producto>> listarProductos() {
-    //ahora va a devolver a todos los productos que ya se guardaron
-        return ResponseEntity.ok(productoRepository.findAll());
-    }
 }

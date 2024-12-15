@@ -1,17 +1,20 @@
-package com.integradora.supermercadointegradora.Entity;
+package com.integradora.supermercadointegradora.entity;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Producto {
+@Table(name = "productos")
+public class Producto implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nombre;
+
     private Double precio;
 
-    // Getters y Setters
+
     public Long getId() {
         return id;
     }
@@ -35,4 +38,6 @@ public class Producto {
     public void setPrecio(Double precio) {
         this.precio = precio;
     }
+
+
 }
