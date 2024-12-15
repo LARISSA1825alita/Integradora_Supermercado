@@ -1,6 +1,5 @@
 package com.integradora.supermercadointegradora.controller;
 
-import com.integradora.supermercadointegradora.entity.CarritoProducto;
 import com.integradora.supermercadointegradora.response.CarritoProductoResponseRest;
 import com.integradora.supermercadointegradora.service.ICarritoProductoService;
 import org.springframework.beans.factory.annotation.Autowired;

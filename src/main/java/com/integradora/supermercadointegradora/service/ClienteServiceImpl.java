@@ -4,8 +4,6 @@ import jakarta.annotation.PostConstruct;
 import com.integradora.supermercadointegradora.entity.CarritoProducto;
 import com.integradora.supermercadointegradora.entity.Cliente;
 import com.integradora.supermercadointegradora.entity.dao.IClienteDAO;
-import com.integradora.supermercadointegradora.entity.dao.IProductoDAO;
-import com.integradora.supermercadointegradora.response.CarritoProductoResponseRest;
 import com.integradora.supermercadointegradora.response.ClienteResponseRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

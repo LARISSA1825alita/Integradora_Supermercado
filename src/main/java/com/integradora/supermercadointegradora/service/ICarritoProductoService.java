@@ -2,7 +2,6 @@ package com.integradora.supermercadointegradora.service;
 
 import com.integradora.supermercadointegradora.entity.CarritoProducto;
 import com.integradora.supermercadointegradora.response.CarritoProductoResponseRest;
-import com.integradora.supermercadointegradora.response.ClienteResponseRest;
 import org.springframework.http.ResponseEntity;
 
 public interface ICarritoProductoService {

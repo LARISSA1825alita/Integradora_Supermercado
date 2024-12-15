@@ -1,4 +1,5 @@
 package com.integradora.supermercadointegradora.entity.dao;
+
 import com.integradora.supermercadointegradora.entity.CarritoProducto;
 import com.integradora.supermercadointegradora.entity.Cliente;
 import org.springframework.data.jpa.repository.Query;

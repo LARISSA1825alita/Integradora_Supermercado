@@ -1,8 +1,9 @@
 package com.integradora.supermercadointegradora.controller;
 
-import org.example.estructuradedatos4f.entity.CarritoProducto;
-import org.example.estructuradedatos4f.response.CarritoProductoResponseRest;
-import org.example.estructuradedatos4f.service.ICarritoProductoService;
+import com.integradora.supermercadointegradora.entity.CarritoProducto;
+import com.integradora.supermercadointegradora.response.CarritoProductoResponseRest;
+import com.integradora.supermercadointegradora.service.ICarritoProductoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

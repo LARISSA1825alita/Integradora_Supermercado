@@ -1,7 +1,6 @@
 package com.integradora.supermercadointegradora.controller;
 
 import com.integradora.supermercadointegradora.entity.Producto;
-import com.integradora.supermercadointegradora.response.ClienteResponseRest;
 import com.integradora.supermercadointegradora.response.ProductoResponseRest;
 import com.integradora.supermercadointegradora.service.IProductoService;
 import org.springframework.beans.factory.annotation.Autowired;

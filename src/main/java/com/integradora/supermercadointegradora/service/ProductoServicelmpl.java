@@ -1,9 +1,8 @@
 package com.integradora.supermercadointegradora.service;
 
-import com.integradora.supermercadointegradora.entity.Cliente;
+
 import com.integradora.supermercadointegradora.entity.Producto;
 import com.integradora.supermercadointegradora.entity.dao.IProductoDAO;
-import com.integradora.supermercadointegradora.response.ClienteResponseRest;
 import com.integradora.supermercadointegradora.response.ProductoResponseRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoServicelmpl implements com.integradora.supermercadointegradora.service.IProductoService {
+public class ProductoServicelmpl implements IProductoService {
     private static final Logger log = LoggerFactory.getLogger(ProductoServicelmpl.class);
 
     @Autowired
